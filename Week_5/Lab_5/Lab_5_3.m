@@ -1,3 +1,7 @@
+% use RANSAC to find the best homography estimate from the estimated
+% correspondences from correspondences between two sets of Harris Corners using
+% Nearest Neighbor and the ratio test
+
 buildingDir = fullfile(toolboxdir('vision'), 'visiondata', 'building');
 buildingScene = imageDatastore(buildingDir);
 
@@ -62,7 +66,8 @@ function best_H = ransac_homography(p1,p2)
     % compute the distance between the estimated correspondence location and the
     % putative correspondence location
     dist = pdist2(p1_hat(1:2,:)', p1, 'euclidean');
-    % inlying points have a distance less than the threshold thresh defined previously
+    % inlying points have a distance less than the threshold thresh defined
+    % previously
     num_inliers =  sum(sum(dist < thresh));
 
     if num_inliers > best_inliers
